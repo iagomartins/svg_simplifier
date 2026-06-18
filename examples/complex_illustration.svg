@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+    <!-- Background gradient effect with rectangles -->
+    <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="400" height="400" fill="url(#grad1)"/>
+
+    <!-- Geometric pattern - many small triangles -->
+    <g fill="rgba(255,255,255,0.2)">
+        <polygon points="50,50 70,80 30,80"/>
+        <polygon points="100,50 120,80 80,80"/>
+        <polygon points="150,50 170,80 130,80"/>
+        <polygon points="200,50 220,80 180,80"/>
+        <polygon points="250,50 270,80 230,80"/>
+        <polygon points="300,50 320,80 280,80"/>
+        <polygon points="350,50 370,80 330,80"/>
+
+        <polygon points="75,100 95,130 55,130"/>
+        <polygon points="125,100 145,130 105,130"/>
+        <polygon points="175,100 195,130 155,130"/>
+        <polygon points="225,100 245,130 205,130"/>
+        <polygon points="275,100 295,130 255,130"/>
+        <polygon points="325,100 345,130 305,130"/>
+
+        <polygon points="50,150 70,180 30,180"/>
+        <polygon points="100,150 120,180 80,180"/>
+        <polygon points="150,150 170,180 130,180"/>
+        <polygon points="200,150 220,180 180,180"/>
+        <polygon points="250,150 270,180 230,180"/>
+        <polygon points="300,150 320,180 280,180"/>
+        <polygon points="350,150 370,180 330,180"/>
+    </g>
+
+    <!-- Curved wave lines -->
+    <g stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none">
+        <path d="M 0,200 Q 100,150 200,200 T 400,200"/>
+        <path d="M 0,220 Q 100,270 200,220 T 400,220"/>
+        <path d="M 0,180 Q 100,130 200,180 T 400,180"/>
+    </g>
+
+    <!-- Central decorative circles -->
+    <circle cx="200" cy="200" r="80" fill="none" stroke="white" stroke-width="3"/>
+    <circle cx="200" cy="200" r="60" fill="none" stroke="white" stroke-width="2"/>
+    <circle cx="200" cy="200" r="40" fill="white" fill-opacity="0.3"/>
+
+    <!-- Corner decorations -->
+    <path d="M 20,20 Q 50,20 50,50" stroke="white" stroke-width="3" fill="none"/>
+    <path d="M 380,20 Q 350,20 350,50" stroke="white" stroke-width="3" fill="none"/>
+    <path d="M 20,380 Q 50,380 50,350" stroke="white" stroke-width="3" fill="none"/>
+    <path d="M 380,380 Q 350,380 350,350" stroke="white" stroke-width="3" fill="none"/>
+</svg>

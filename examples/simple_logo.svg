@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <!-- Background circle -->
+    <circle cx="100" cy="100" r="90" fill="#3498db"/>
+
+    <!-- Star shape -->
+    <polygon points="100,20 120,80 180,80 130,120 150,180 100,140 50,180 70,120 20,80 80,80" fill="#f39c12"/>
+
+    <!-- Inner circle -->
+    <circle cx="100" cy="100" r="30" fill="#e74c3c"/>
+
+    <!-- Decorative lines -->
+    <path d="M 100 10 L 100 30" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 100 170 L 100 190" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 10 100 L 30 100" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 170 100 L 190 100" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+</svg>
