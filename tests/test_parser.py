@@ -214,6 +214,84 @@ class TestSVGParser:
         assert bbox[3] >= 70.0
 
 
+class TestImplicitCommandRepetition:
+    """Regression tests for SVG implicit command repetition (SVG spec requirement)."""
+
+    def test_implicit_l_after_m(self, parser: SVGParser) -> None:
+        """M followed by extra coords should be treated as implicit L commands."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 10 0 10 10 0 10 Z"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert result.paths[0].is_closed
+        assert len(result.paths[0].curves) >= 4
+
+    def test_implicit_l_repeat(self, parser: SVGParser) -> None:
+        """L with multiple coordinate pairs should produce multiple line segments."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 L 100 0 100 100 0 100 Z"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert len(result.paths[0].curves) >= 4
+
+    def test_implicit_c_repeat(self, parser: SVGParser) -> None:
+        """C with multiple 6-value groups should produce multiple cubic curves."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 C 50 0 50 100 100 100 150 100 150 0 200 0"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert len(result.paths[0].curves) == 2
+
+    def test_implicit_h_repeat(self, parser: SVGParser) -> None:
+        """H with multiple values should produce multiple horizontal segments."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 H 50 100 150"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert len(result.paths[0].curves) == 3
+
+    def test_implicit_v_repeat(self, parser: SVGParser) -> None:
+        """V with multiple values should produce multiple vertical segments."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 V 50 100 150"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert len(result.paths[0].curves) == 3
+
+    def test_implicit_q_repeat(self, parser: SVGParser) -> None:
+        """Q with multiple 4-value groups should produce multiple quadratic curves."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 Q 50 100 100 0 150 100 200 0"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert len(result.paths[0].curves) == 2
+
+    def test_z_after_implicit_coords_no_crash(self, parser: SVGParser) -> None:
+        """Z immediately following implicit coordinate repetition must not crash."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 L 100 0 100 100 0 100Z"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert result.paths[0].is_closed
+
+    def test_mixed_implicit_and_explicit_commands(self, parser: SVGParser) -> None:
+        """Complex real-world path mixing implicit repeats and explicit commands."""
+        svg = '''<svg xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 10 L 90 10 90 90 C 90 95 85 100 80 100 20 100 10 90 10 80Z"/>
+        </svg>'''
+        result = parser.parse_string(svg)
+        assert len(result.paths) == 1
+        assert result.paths[0].is_closed
+        assert len(result.paths[0].curves) >= 4
+
+
 class TestParsedPath:
     """Test suite for ParsedPath class."""
 

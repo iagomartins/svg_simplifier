@@ -342,6 +342,10 @@ class SVGParser:
         )
         self._result.paths.append(parsed_path)
 
+    def _is_number_token(self, token: str) -> bool:
+        """Return True if token represents a number, False if it is a command letter."""
+        return bool(token) and not token[0].isalpha()
+
     def _parse_path_data(self, d: str) -> dict[str, Any]:
         """Parse SVG path data string with full command support."""
         curves: list[CubicBezier] = []
@@ -352,10 +356,12 @@ class SVGParser:
         tokens = self._tokenize_path(d)
         i = 0
         while i < len(tokens):
-            cmd = tokens[i]
-            i += 1
-            if not cmd.isalpha():
+            token = tokens[i]
+            if not token[0].isalpha():
+                i += 1
                 continue
+            cmd = token
+            i += 1
             is_relative = cmd.islower()
             cmd_upper = cmd.upper()
             if cmd_upper == "M":
@@ -363,86 +369,99 @@ class SVGParser:
                 i += 2
                 current_pos = current_pos + create_point(x, y) if is_relative else create_point(x, y)
                 start_pos = current_pos
-                while i < len(tokens) and not tokens[i][0].isalpha():
+                last_control = None
+                while i < len(tokens) and self._is_number_token(tokens[i]):
                     x, y = float(tokens[i]), float(tokens[i + 1])
                     i += 2
                     new_pos = current_pos + create_point(x, y) if is_relative else create_point(x, y)
                     curves.append(self._line_to_bezier(current_pos, new_pos))
                     current_pos = new_pos
             elif cmd_upper == "L":
-                x, y = float(tokens[i]), float(tokens[i + 1])
-                i += 2
-                new_pos = current_pos + create_point(x, y) if is_relative else create_point(x, y)
-                curves.append(self._line_to_bezier(current_pos, new_pos))
-                current_pos = new_pos
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    x, y = float(tokens[i]), float(tokens[i + 1])
+                    i += 2
+                    new_pos = current_pos + create_point(x, y) if is_relative else create_point(x, y)
+                    curves.append(self._line_to_bezier(current_pos, new_pos))
+                    last_control = None
+                    current_pos = new_pos
             elif cmd_upper == "H":
-                x = float(tokens[i])
-                i += 1
-                new_pos = current_pos + create_point(x, 0) if is_relative else create_point(x, current_pos[1])
-                curves.append(self._line_to_bezier(current_pos, new_pos))
-                current_pos = new_pos
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    x = float(tokens[i])
+                    i += 1
+                    new_pos = current_pos + create_point(x, 0) if is_relative else create_point(x, current_pos[1])
+                    curves.append(self._line_to_bezier(current_pos, new_pos))
+                    last_control = None
+                    current_pos = new_pos
             elif cmd_upper == "V":
-                y = float(tokens[i])
-                i += 1
-                new_pos = current_pos + create_point(0, y) if is_relative else create_point(current_pos[0], y)
-                curves.append(self._line_to_bezier(current_pos, new_pos))
-                current_pos = new_pos
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    y = float(tokens[i])
+                    i += 1
+                    new_pos = current_pos + create_point(0, y) if is_relative else create_point(current_pos[0], y)
+                    curves.append(self._line_to_bezier(current_pos, new_pos))
+                    last_control = None
+                    current_pos = new_pos
             elif cmd_upper == "C":
-                x1, y1 = float(tokens[i]), float(tokens[i + 1])
-                x2, y2 = float(tokens[i + 2]), float(tokens[i + 3])
-                x, y = float(tokens[i + 4]), float(tokens[i + 5])
-                i += 6
-                cp1 = current_pos + create_point(x1, y1) if is_relative else create_point(x1, y1)
-                cp2 = current_pos + create_point(x2, y2) if is_relative else create_point(x2, y2)
-                end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
-                curves.append(CubicBezier(current_pos, cp1, cp2, end))
-                last_control = cp2
-                current_pos = end
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    x1, y1 = float(tokens[i]), float(tokens[i + 1])
+                    x2, y2 = float(tokens[i + 2]), float(tokens[i + 3])
+                    x, y = float(tokens[i + 4]), float(tokens[i + 5])
+                    i += 6
+                    cp1 = current_pos + create_point(x1, y1) if is_relative else create_point(x1, y1)
+                    cp2 = current_pos + create_point(x2, y2) if is_relative else create_point(x2, y2)
+                    end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
+                    curves.append(CubicBezier(current_pos, cp1, cp2, end))
+                    last_control = cp2
+                    current_pos = end
             elif cmd_upper == "S":
-                x2, y2 = float(tokens[i]), float(tokens[i + 1])
-                x, y = float(tokens[i + 2]), float(tokens[i + 3])
-                i += 4
-                cp1 = 2 * current_pos - last_control if last_control is not None else current_pos
-                cp2 = current_pos + create_point(x2, y2) if is_relative else create_point(x2, y2)
-                end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
-                curves.append(CubicBezier(current_pos, cp1, cp2, end))
-                last_control = cp2
-                current_pos = end
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    x2, y2 = float(tokens[i]), float(tokens[i + 1])
+                    x, y = float(tokens[i + 2]), float(tokens[i + 3])
+                    i += 4
+                    cp1 = 2 * current_pos - last_control if last_control is not None else current_pos
+                    cp2 = current_pos + create_point(x2, y2) if is_relative else create_point(x2, y2)
+                    end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
+                    curves.append(CubicBezier(current_pos, cp1, cp2, end))
+                    last_control = cp2
+                    current_pos = end
             elif cmd_upper == "Q":
-                x1, y1 = float(tokens[i]), float(tokens[i + 1])
-                x, y = float(tokens[i + 2]), float(tokens[i + 3])
-                i += 4
-                cp = current_pos + create_point(x1, y1) if is_relative else create_point(x1, y1)
-                end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
-                curves.append(self._quadratic_to_cubic(current_pos, cp, end))
-                last_control = cp
-                current_pos = end
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    x1, y1 = float(tokens[i]), float(tokens[i + 1])
+                    x, y = float(tokens[i + 2]), float(tokens[i + 3])
+                    i += 4
+                    cp = current_pos + create_point(x1, y1) if is_relative else create_point(x1, y1)
+                    end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
+                    curves.append(self._quadratic_to_cubic(current_pos, cp, end))
+                    last_control = cp
+                    current_pos = end
             elif cmd_upper == "T":
-                x, y = float(tokens[i]), float(tokens[i + 1])
-                i += 2
-                cp = 2 * current_pos - last_control if last_control is not None else current_pos
-                end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
-                curves.append(self._quadratic_to_cubic(current_pos, cp, end))
-                last_control = cp
-                current_pos = end
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    x, y = float(tokens[i]), float(tokens[i + 1])
+                    i += 2
+                    cp = 2 * current_pos - last_control if last_control is not None else current_pos
+                    end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
+                    curves.append(self._quadratic_to_cubic(current_pos, cp, end))
+                    last_control = cp
+                    current_pos = end
             elif cmd_upper == "A":
-                rx, ry = float(tokens[i]), float(tokens[i + 1])
-                rotation = float(tokens[i + 2])
-                large_arc = int(tokens[i + 3])
-                sweep = int(tokens[i + 4])
-                x, y = float(tokens[i + 5]), float(tokens[i + 6])
-                i += 7
-                end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
-                arc_curves = self._arc_to_beziers(current_pos, end, rx, ry, rotation, large_arc, sweep)
-                curves.extend(arc_curves)
-                if arc_curves:
-                    last_control = arc_curves[-1].p2
-                current_pos = end
+                while i < len(tokens) and self._is_number_token(tokens[i]):
+                    rx, ry = float(tokens[i]), float(tokens[i + 1])
+                    rotation = float(tokens[i + 2])
+                    large_arc = int(tokens[i + 3])
+                    sweep = int(tokens[i + 4])
+                    x, y = float(tokens[i + 5]), float(tokens[i + 6])
+                    i += 7
+                    end = current_pos + create_point(x, y) if is_relative else create_point(x, y)
+                    arc_curves = self._arc_to_beziers(current_pos, end, rx, ry, rotation, large_arc, sweep)
+                    curves.extend(arc_curves)
+                    if arc_curves:
+                        last_control = arc_curves[-1].p2
+                    current_pos = end
             elif cmd_upper == "Z":
                 if point_distance(current_pos, start_pos) > 1e-10:
                     curves.append(self._line_to_bezier(current_pos, start_pos))
                 is_closed = True
                 current_pos = start_pos
+                last_control = None
         return {"curves": curves, "closed": is_closed}
 
     def _tokenize_path(self, d: str) -> list[str]:

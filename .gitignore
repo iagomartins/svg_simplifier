@@ -1,2 +1,4 @@
 svg_simplifier.egg-info
 dist
+*.pyc
+__pycache__
