@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "svg-simplifier"
-version = "1.0.0"
+version = "1.0.1"
 description = "Production-ready SVG path geometry simplification with Bézier curve fitting"
 readme = "README.md"
 license = {text = "MIT"}
