@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="139.8"
+   height="109.6"
+   viewBox="0 0 139.8 109.6"
+   fill="none"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.21625"
+     inkscape:cx="99.943598"
+     inkscape:cy="26.395939"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <defs
+     id="defs4">
+    <linearGradient
+       id="tech_grad"
+       x1="12.909944"
+       y1="7.7459667"
+       x2="90.369611"
+       y2="85.205634"
+       gradientTransform="scale(0.77459667,1.2909944)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#00F2FE"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#4FACFE"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       id="art_grad"
+       x1="82.373182"
+       y1="97.834751"
+       x2="175.77639"
+       y2="4.4315394"
+       gradientTransform="scale(0.85221912,1.1734071)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#736EFE"
+         id="stop3" />
+      <stop
+         offset="100%"
+         stop-color="#5E5AE6"
+         id="stop4" />
+    </linearGradient>
+    <filter
+       id="glow"
+       x="-0.068571429"
+       y="-0.048"
+       width="1.1371429"
+       height="1.096">
+      <feGaussianBlur
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur4" />
+      <feComposite
+         in="SourceGraphic"
+         in2="blur"
+         operator="over"
+         id="feComposite4" />
+    </filter>
+  </defs>
+  <g
+     transform="translate(-10,-5.2)"
+     id="g5">
+    <path
+       d="M 10,110 V 30 L 50,10 H 70 V 110 H 50 V 50 L 30,65 v 45 z"
+       fill="url(#tech_grad)"
+       id="path4"
+       style="fill:url(#tech_grad)" />
+    <path
+       d="m 75,110 c 0,0 0,-100 35,-100 35,0 35,100 35,100 h -20 c 0,0 0,-60 -15,-60 -15,0 -15,60 -15,60 z"
+       fill="url(#art_grad)"
+       filter="url(#glow)"
+       id="path5"
+       style="fill:url(#art_grad)" />
+    <circle
+       cx="72.5"
+       cy="40"
+       r="6"
+       fill="#ffffff"
+       id="circle5" />
+  </g>
+</svg>

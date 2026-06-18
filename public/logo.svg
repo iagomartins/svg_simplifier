@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="400"
+   height="160"
+   viewBox="0 0 400 160"
+   fill="none"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.21625"
+     inkscape:cx="225.1551"
+     inkscape:cy="15.566836"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <defs
+     id="defs4">
+    <linearGradient
+       id="tech_grad"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="100%">
+      <stop
+         offset="0%"
+         stop-color="#00F2FE"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#4FACFE"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       id="art_grad"
+       x1="0%"
+       y1="100%"
+       x2="100%"
+       y2="0%">
+      <stop
+         offset="0%"
+         stop-color="#736EFE"
+         id="stop3" />
+      <stop
+         offset="100%"
+         stop-color="#5E5AE6"
+         id="stop4" />
+    </linearGradient>
+    <filter
+       id="glow"
+       x="-0.068571429"
+       y="-0.048"
+       width="1.1371429"
+       height="1.096">
+      <feGaussianBlur
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur4" />
+      <feComposite
+         in="SourceGraphic"
+         in2="blur"
+         operator="over"
+         id="feComposite4" />
+    </filter>
+  </defs>
+  <g
+     transform="translate(20, 20)"
+     id="g5">
+    <path
+       d="M10 110V30L50 10H70V110H50V50L30 65V110H10Z"
+       fill="url(#tech_grad)"
+       id="path4" />
+    <path
+       d="M75 110C75 110 75 10 110 10C145 10 145 110 145 110H125C125 110 125 50 110 50C95 50 95 110 95 110H75Z"
+       fill="url(#art_grad)"
+       filter="url(#glow)"
+       id="path5" />
+    <circle
+       cx="72.5"
+       cy="40"
+       r="6"
+       fill="#FFFFFF"
+       id="circle5" />
+  </g>
+  <text
+     x="170"
+     y="85"
+     font-family="Inter, sans-serif"
+     font-weight="800"
+     font-size="34px"
+     fill="#ffffff"
+     id="text5"
+     style="fill:#6661ef;fill-opacity:1">TECH <tspan
+   style="fill:#6661ef;fill-opacity:1"
+   id="tspan9">A</tspan><tspan
+   style="fill:#6661ef;fill-opacity:1"
+   id="tspan8">RTE</tspan></text>
+  <text
+     x="172"
+     y="110"
+     font-family="Inter, sans-serif"
+     font-weight="300"
+     font-size="14"
+     letter-spacing="4"
+     fill="#888888"
+     id="text6">
+    AGÊNCIA DIGITAL
+  </text>
+</svg>

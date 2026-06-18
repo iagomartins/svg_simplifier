@@ -1,3 +1,14 @@
+<p align="center">
+  <img src="public/logo.svg" alt="SVG Simplifier Logo" width="480"/>
+</p>
+
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"/></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.12%2B-blue.svg" alt="Python 3.12+"/></a>
+  <a href="https://pypi.org/project/svg-simplifier/"><img src="https://img.shields.io/pypi/v/svg-simplifier.svg" alt="PyPI version"/></a>
+  <img src="https://img.shields.io/badge/status-production--ready-brightgreen" alt="Production Ready"/>
+</p>
+
 # SVG Simplifier
 
 A production-ready Python library for simplifying SVG path geometry while preserving visual appearance. This tool implements advanced algorithms including adaptive curve flattening, Douglas-Peucker simplification, and Schneider's Bézier curve fitting to achieve 60-90% node reduction with minimal quality loss.
@@ -238,17 +249,62 @@ Adjacent curves are merged when the combined approximation error remains within 
 
 ## Contributing
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full developer guide.
+
+**Quick checklist:**
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make changes with tests
-4. Run the test suite (`pytest`)
+3. Make changes with tests — coverage must not drop
+4. Run the full quality pipeline (`black`, `ruff`, `mypy`, `pytest`)
 5. Commit changes (`git commit -m 'Add amazing feature'`)
 6. Push to branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
+7. Open a Pull Request targeting `main`
+
+## Developer Rules
+
+> Full details in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+| Rule | Detail |
+|------|--------|
+| **Python version** | 3.12+ only |
+| **Style** | `black` (line-length 100) + `ruff` |
+| **Types** | Strict `mypy` — all public functions must be fully typed |
+| **Tests** | `pytest` — no PR merged with failing tests or reduced coverage |
+| **Package layout** | Core logic lives in `simplifier/`; never add modules outside this package without discussion |
+| **Dependencies** | Add runtime deps to `pyproject.toml` `[dependencies]`, dev deps to `[dev]` |
+| **No secrets** | Never commit API keys, credentials, or personal data |
+| **Commits** | Conventional Commits style (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`) |
 
 ## License
 
-MIT License - see LICENSE file for details.
+This project is released under the **MIT License** — one of the most permissive open-source licenses available.
+
+```
+MIT License
+
+Copyright (c) 2024 SVG Simplifier Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+See the [LICENSE](LICENSE) file for the full text.
 
 ## References
 
